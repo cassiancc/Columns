@@ -4,7 +4,7 @@ import io.github.haykam821.columns.data.provider.ColumnsBlockLootTableProvider;
 import io.github.haykam821.columns.data.provider.ColumnsBlockTagProvider;
 import io.github.haykam821.columns.data.provider.ColumnsItemTagProvider;
 import io.github.haykam821.columns.data.provider.ColumnsModelProvider;
-import io.github.haykam821.columns.data.provider.ColumnsRecipeProvider;
+import io.github.haykam821.columns.data.provider.ColumnsRecipeGenerator;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
@@ -22,6 +22,6 @@ public class ColumnsDatagen implements DataGeneratorEntrypoint {
 
 		pack.addProvider(ColumnsModelProvider::new);
 
-		pack.addProvider(ColumnsRecipeProvider::new);
+		pack.addProvider(ColumnsRecipeGenerator.Provider::new);
 	}
 }
