@@ -10,6 +10,8 @@ import net.minecraft.item.ItemGroups;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 
 public enum ColumnTypes {
@@ -49,10 +51,15 @@ public enum ColumnTypes {
 		this.base = base;
 		this.wall = wall;
 
-		Block.Settings blockSettings = Block.Settings.copy(base);
+		Block.Settings blockSettings = Block.Settings.copy(base)
+			.registryKey(RegistryKey.of(RegistryKeys.BLOCK, id));
+
 		this.block = new ColumnBlock(blockSettings);
 
-		Item.Settings itemSettings = new Item.Settings();
+		Item.Settings itemSettings = new Item.Settings()
+			.registryKey(RegistryKey.of(RegistryKeys.ITEM, id))
+			.useBlockPrefixedTranslationKey();
+
 		this.item = new BlockItem(this.block, itemSettings);
 
 		Registry.register(Registries.BLOCK, id, this.block);

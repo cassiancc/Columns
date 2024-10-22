@@ -15,11 +15,13 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldView;
+import net.minecraft.world.tick.ScheduledTickView;
 
 public class ColumnBlock extends Block implements Waterloggable {
 	public static final BooleanProperty UP = Properties.UP;
@@ -54,7 +56,7 @@ public class ColumnBlock extends Block implements Waterloggable {
 		}
 	}
 
-	public boolean hasEndInDirection(WorldAccess world, BlockPos pos, Direction direction) {
+	public boolean hasEndInDirection(WorldView world, BlockPos pos, Direction direction) {
 		BlockPos targetPos = pos.offset(direction);
 		BlockState targetState = world.getBlockState(targetPos);
 		return !targetState.isIn(Main.COLUMNS_BLOCK_TAG);
@@ -73,9 +75,9 @@ public class ColumnBlock extends Block implements Waterloggable {
 	}
 
 	@Override
-	public BlockState getStateForNeighborUpdate(BlockState state, Direction towards, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+	protected BlockState getStateForNeighborUpdate(BlockState state, WorldView world, ScheduledTickView tickView, BlockPos pos, Direction towards, BlockPos neighborPos, BlockState neighborState, Random random) {
 		if (state.get(WATERLOGGED)) {
-			world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+			tickView.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
 		}
 		
 		if (towards == Direction.UP || towards == Direction.DOWN) {
