@@ -1,5 +1,5 @@
 plugins {
-	id "fabric-loom" version "1.8.11"
+	id "fabric-loom" version "1.9.2"
 	id "maven-publish"
 }
 
@@ -14,47 +14,20 @@ repositories {
 	}
 }
 
-sourceSets {
-	main {
-		resources {
-			srcDirs += [
-				"src/main/generated"
-			]
-		}
-	}
-
-	datagen {
-		compileClasspath += main.compileClasspath
-		runtimeClasspath += main.runtimeClasspath
-		compileClasspath += main.output
-		runtimeClasspath += main.output
-	}
-}
-
 loom {
 	accessWidenerPath = file("src/main/resources/columns.accesswidener")
 
 	splitEnvironmentSourceSets()
+}
 
-	mods {
-		woodenhoppers {
-			sourceSet(sourceSets.main)
-		}
-	}
-
-	runs {
-		datagen {
-			server()
-			source = sourceSets.datagen
-
-			name = "Data Generation"
-			runDir = "build/datagen"
-
-			vmArg("-Dfabric-api.datagen")
-			vmArg("-Dfabric-api.datagen.output-dir=${file("src/main/generated")}")
-		}
+fabricApi {
+	configureDataGeneration {
+		modId = "columns"
+		createSourceSet = true
+		client = true
 	}
 }
+
 assemble.dependsOn(runDatagen)
 
 dependencies {
