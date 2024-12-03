@@ -18,6 +18,7 @@ public enum ColumnTypes {
 	TUFF("tuff", Blocks.TUFF, Items.TUFF_WALL),
 	POLISHED_TUFF("polished_tuff", Blocks.POLISHED_TUFF, Items.POLISHED_TUFF_WALL),
 	TUFF_BRICK("tuff_brick", Blocks.TUFF_BRICKS, Items.TUFF_BRICK_WALL),
+	RESIN_BRICK("resin_brick", Blocks.RESIN_BRICKS, Items.RESIN_BRICK_WALL),
 	COBBLESTONE("cobblestone", Blocks.COBBLESTONE, Items.COBBLESTONE_WALL),
 	MOSSY_COBBLESTONE("mossy_cobblestone", Blocks.MOSSY_COBBLESTONE, Items.MOSSY_COBBLESTONE_WALL),
 	BRICK("brick", Blocks.BRICKS, Items.BRICK_WALL),

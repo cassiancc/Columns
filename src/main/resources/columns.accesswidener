@@ -1,15 +1,15 @@
 accessWidener	v2	named
 
-accessible	method	net/minecraft/data/server/recipe/ShapedRecipeJsonBuilder	validate	(Lnet/minecraft/registry/RegistryKey;)Lnet/minecraft/recipe/RawShapedRecipe;
-accessible	field	net/minecraft/data/server/recipe/ShapedRecipeJsonBuilder	group	Ljava/lang/String;
-accessible	field	net/minecraft/data/server/recipe/ShapedRecipeJsonBuilder	criteria	Ljava/util/Map;
-accessible	field	net/minecraft/data/server/recipe/ShapedRecipeJsonBuilder	category	Lnet/minecraft/recipe/book/RecipeCategory;
-accessible	field	net/minecraft/data/server/recipe/ShapedRecipeJsonBuilder	showNotification	Z
-accessible	field	net/minecraft/data/server/recipe/ShapedRecipeJsonBuilder	count	I
+accessible	method	net/minecraft/data/recipe/ShapedRecipeJsonBuilder	validate	(Lnet/minecraft/registry/RegistryKey;)Lnet/minecraft/recipe/RawShapedRecipe;
+accessible	field	net/minecraft/data/recipe/ShapedRecipeJsonBuilder	group	Ljava/lang/String;
+accessible	field	net/minecraft/data/recipe/ShapedRecipeJsonBuilder	criteria	Ljava/util/Map;
+accessible	field	net/minecraft/data/recipe/ShapedRecipeJsonBuilder	category	Lnet/minecraft/recipe/book/RecipeCategory;
+accessible	field	net/minecraft/data/recipe/ShapedRecipeJsonBuilder	showNotification	Z
+accessible	field	net/minecraft/data/recipe/ShapedRecipeJsonBuilder	count	I
 
-accessible	method	net/minecraft/data/server/recipe/StonecuttingRecipeJsonBuilder	validate	(Lnet/minecraft/registry/RegistryKey;)V
-accessible	field	net/minecraft/data/server/recipe/StonecuttingRecipeJsonBuilder	criteria	Ljava/util/Map;
-accessible	field	net/minecraft/data/server/recipe/StonecuttingRecipeJsonBuilder	group	Ljava/lang/String;
-accessible	field	net/minecraft/data/server/recipe/StonecuttingRecipeJsonBuilder	input	Lnet/minecraft/recipe/Ingredient;
-accessible	field	net/minecraft/data/server/recipe/StonecuttingRecipeJsonBuilder	count	I
-accessible	field	net/minecraft/data/server/recipe/StonecuttingRecipeJsonBuilder	recipeFactory	Lnet/minecraft/recipe/SingleStackRecipe$RecipeFactory;
+accessible	method	net/minecraft/data/recipe/StonecuttingRecipeJsonBuilder	validate	(Lnet/minecraft/registry/RegistryKey;)V
+accessible	field	net/minecraft/data/recipe/StonecuttingRecipeJsonBuilder	criteria	Ljava/util/Map;
+accessible	field	net/minecraft/data/recipe/StonecuttingRecipeJsonBuilder	group	Ljava/lang/String;
+accessible	field	net/minecraft/data/recipe/StonecuttingRecipeJsonBuilder	input	Lnet/minecraft/recipe/Ingredient;
+accessible	field	net/minecraft/data/recipe/StonecuttingRecipeJsonBuilder	count	I
+accessible	field	net/minecraft/data/recipe/StonecuttingRecipeJsonBuilder	recipeFactory	Lnet/minecraft/recipe/SingleStackRecipe$RecipeFactory;
