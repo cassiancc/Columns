@@ -7,60 +7,60 @@ import io.github.haykam821.columns.block.ColumnBlock;
 import io.github.haykam821.columns.block.ColumnTypes;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.data.BlockStateModelGenerator;
 import net.minecraft.client.data.BlockStateVariant;
-import net.minecraft.client.data.ItemModelGenerator;
-import net.minecraft.client.data.Model;
 import net.minecraft.client.data.MultipartBlockStateSupplier;
-import net.minecraft.client.data.TextureKey;
-import net.minecraft.client.data.TextureMap;
 import net.minecraft.client.data.VariantSettings;
 import net.minecraft.client.data.When;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.model.ModelTemplate;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 public class ColumnsModelProvider extends FabricModelProvider {
-	public static final Model COLUMN_CENTER = createModel("column_center", "_center", TextureKey.ALL);
-	public static final Model COLUMN_END = createModel("column_end", "_end", TextureKey.ALL);
-	public static final Model COLUMN_INVENTORY = createModel("column_inventory", "_inventory", TextureKey.ALL);
+	public static final ModelTemplate COLUMN_CENTER = createModel("column_center", "_center", TextureSlot.ALL);
+	public static final ModelTemplate COLUMN_END = createModel("column_end", "_end", TextureSlot.ALL);
+	public static final ModelTemplate COLUMN_INVENTORY = createModel("column_inventory", "_inventory", TextureSlot.ALL);
 
 	public ColumnsModelProvider(FabricDataOutput dataOutput) {
 		super(dataOutput);
 	}
 
 	@Override
-	public void generateBlockStateModels(BlockStateModelGenerator modelGenerator) {
+	public void generateBlockStateModels(BlockModelGenerators modelGenerator) {
 		for (ColumnTypes columnType : ColumnTypes.values()) {
 			ColumnsModelProvider.registerColumn(modelGenerator, columnType.block, columnType.base);
 		}
 	}
 
 	@Override
-	public void generateItemModels(ItemModelGenerator modelGenerator) {
+	public void generateItemModels(ItemModelGenerators modelGenerator) {
 		return;
 	}
 
-	public static void registerColumn(BlockStateModelGenerator modelGenerator, Block block, Block base) {
-		TextureMap textures = getTextures(base);
+	public static void registerColumn(BlockModelGenerators modelGenerator, Block block, Block base) {
+		TextureMapping textures = getTextures(base);
 
-		Identifier centerId = COLUMN_CENTER.upload(block, textures, modelGenerator.modelCollector);
-		Identifier endId = COLUMN_END.upload(block, textures, modelGenerator.modelCollector);
+		Identifier centerId = COLUMN_CENTER.create(block, textures, modelGenerator.modelOutput);
+		Identifier endId = COLUMN_END.create(block, textures, modelGenerator.modelOutput);
 
-		modelGenerator.blockStateCollector.accept(MultipartBlockStateSupplier.create(block)
+		modelGenerator.blockStateOutput.accept(MultipartBlockStateSupplier.create(block)
 			.with(createVariant(centerId))
 			.with(When.create().set(ColumnBlock.DOWN, true), createVariant(endId))
 			.with(When.create().set(ColumnBlock.UP, true), createVariantRotated(endId)));
 
-		Identifier inventoryId = COLUMN_INVENTORY.upload(block, textures, modelGenerator.modelCollector);
-		modelGenerator.registerParentedItemModel(block, inventoryId);
+		Identifier inventoryId = COLUMN_INVENTORY.create(block, textures, modelGenerator.modelOutput);
+		modelGenerator.registerSimpleItemModel(block, inventoryId);
 	}
 
-	private static TextureMap getTextures(Block base) {
+	private static TextureMapping getTextures(Block base) {
 		if (base == Blocks.SANDSTONE || base == Blocks.RED_SANDSTONE) {
-			return TextureMap.all(TextureMap.getSubId(base, "_top"));
+			return TextureMapping.cube(TextureMapping.getBlockTexture(base, "_top"));
 		}
-		return TextureMap.all(base);
+		return TextureMapping.cube(base);
 	}
 
 	private static BlockStateVariant createVariant(Identifier modelId) {
@@ -73,7 +73,7 @@ public class ColumnsModelProvider extends FabricModelProvider {
 			.put(VariantSettings.UVLOCK, true);
 	}
 
-	private static Model createModel(String parent, String variant, TextureKey... requiredTextures) {
-		return new Model(Optional.of(Main.id("block/" + parent)), Optional.of(variant), requiredTextures);
+	private static ModelTemplate createModel(String parent, String variant, TextureSlot... requiredTextures) {
+		return new ModelTemplate(Optional.of(Main.id("block/" + parent)), Optional.of(variant), requiredTextures);
 	}
 }
