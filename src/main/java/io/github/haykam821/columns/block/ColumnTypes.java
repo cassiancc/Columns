@@ -1,7 +1,7 @@
 package io.github.haykam821.columns.block;
 
 import io.github.haykam821.columns.Main;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -69,9 +69,9 @@ public enum ColumnTypes {
 	}
 
 	public static void register() {
-		ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.BUILDING_BLOCKS).register(entries -> {
+		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.BUILDING_BLOCKS).register(entries -> {
 			for (ColumnTypes type : ColumnTypes.values()) {
-				entries.addBefore(type.wall, type.item);
+				entries.insertBefore(type.wall, type.item);
 			}
 		});
 	}

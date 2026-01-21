@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 import io.github.haykam821.columns.block.ColumnTypes;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
@@ -107,8 +107,7 @@ public class ColumnsRecipeGenerator extends RecipeProvider {
 	}
 
 	private void offerCraftingTo(ShapedRecipeBuilder factory) {
-		Identifier recipeId = RecipeBuilder.getDefaultRecipeId(factory.getResult());
-		ResourceKey<Recipe<?>> recipeKey = ResourceKey.create(Registries.RECIPE, recipeId);
+		ResourceKey<Recipe<?>> recipeKey = RecipeBuilder.getDefaultRecipeId(factory.result);
 
 		this.offerShapedTo(recipeKey, factory);
 	}
@@ -128,9 +127,8 @@ public class ColumnsRecipeGenerator extends RecipeProvider {
 
 		String group = Objects.requireNonNullElse(factory.group, "");
 		CraftingBookCategory category = RecipeBuilder.determineBookCategory(factory.category);
-		ItemStack output = new ItemStack(factory.getResult(), factory.count);
 
-		ShapedRecipe recipe = new ShapedRecipe(group, category, rawRecipe, output, factory.showNotification);
+		ShapedRecipe recipe = new ShapedRecipe(group, category, rawRecipe, factory.result, factory.showNotification);
 		this.output.accept(recipeKey, recipe, advancement);
 	}
 
@@ -148,9 +146,8 @@ public class ColumnsRecipeGenerator extends RecipeProvider {
 		AdvancementHolder advancement = advancementBuilder.build(advancementId);
 
 		String group = Objects.requireNonNullElse(factory.group, "");
-		ItemStack output = new ItemStack(factory.getResult(), factory.count);
 
-		SingleItemRecipe recipe = factory.factory.create(group, factory.ingredient, output);
+		SingleItemRecipe recipe = factory.factory.create(group, factory.ingredient, factory.result);
 		this.output.accept(recipeKey, recipe, advancement);
 	}
 
@@ -159,7 +156,7 @@ public class ColumnsRecipeGenerator extends RecipeProvider {
 	}
 
 	public static class Provider extends FabricRecipeProvider {
-		public Provider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registries) {
+		public Provider(FabricPackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registries) {
 			super(dataOutput, registries);
 		}
 
